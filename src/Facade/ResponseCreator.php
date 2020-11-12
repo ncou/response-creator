@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Chiron\ResponseCreator;
+namespace Chiron\ResponseCreator\Facade;
 
 use Chiron\Core\Facade\AbstractFacade;
 
