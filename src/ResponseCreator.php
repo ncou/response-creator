@@ -18,7 +18,7 @@ use RuntimeException;
 //https://github.com/slimphp/Slim-Http/blob/9ce77b2e6f5183bc5464d8fb8c0795aa3e5d070a/src/Response.php#L264
 //https://github.com/slimphp/Slim-Http/blob/9ce77b2e6f5183bc5464d8fb8c0795aa3e5d070a/tests/ResponseTest.php#L381
 
-// TODO : exeternaliser cette classe dans un package chiron/response-creator car c'est juste un helper et donc cela allourdi le package existant chiron/http.
+// TODO : ajouter une dépendance vers le package chiron/http-message-utils et utiliser les classes StatusCode et Headers pour utiliser des constantes !!!!
 
 // TODO : utiliser cette classe dans le RouteCollector lorsqu'on créé une redirection ou qu'on utilise la fonction ->view() pour charger une page ????
 final class ResponseCreator
@@ -78,7 +78,7 @@ final class ResponseCreator
      * @param UriInterface|string $uri
      * @param int                 $code
      *
-     * @throws ResponseException
+     * @throws InvalidArgumentException
      *
      * @return ResponseInterface
      */
@@ -138,7 +138,7 @@ final class ResponseCreator
      * @param string|null                     $name
      * @param bool|string                     $contentType
      *
-     * @return static
+     * @return ResponseInterface
      */
     public function attachment($file, ?string $name = null, $contentType = true): ResponseInterface
     {
@@ -191,7 +191,7 @@ final class ResponseCreator
      * @throws RuntimeException         If the file cannot be opened.
      * @throws InvalidArgumentException If the mode is invalid.
      *
-     * @return static
+     * @return ResponseInterface
      */
     public function file($file, $contentType = true): ResponseInterface
     {

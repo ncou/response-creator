@@ -13,6 +13,7 @@ use RuntimeException;
 
 class ResponseCreatorTest extends TestCase
 {
+    /** @var ResponseCreator */
     private $responseCreator;
 
     /**
@@ -28,7 +29,7 @@ class ResponseCreatorTest extends TestCase
 
     // TODO : faire un test avec un objet URI.
     // TODO : faire un test avec l'exception qui se léve !!!! (cad en passant un interger en paramétre par exemple)
-    public function testRedirect()
+    public function testRedirect(): void
     {
         $response = $this->responseCreator->redirect('/foo', 301);
         $responseWithDefaultStatus = $this->responseCreator->redirect('/foo');
@@ -46,7 +47,7 @@ class ResponseCreatorTest extends TestCase
     // TODO : tester avec un tableau qui contient une key = 'status' pour changer le statuscode de la response.
     // TODO : tester en passant un contentType différent. ex : application/vnd.api+json
     // TODO : tester avec des caractéeres unicode et des slash dans le texte. Ils ne doivent pas être encodés !!!
-    public function testJson()
+    public function testJson(): void
     {
         $data = ['foo' => 'bar1&bar2'];
 
@@ -66,7 +67,7 @@ class ResponseCreatorTest extends TestCase
         $this->assertEquals($response->getStatusCode(), 200);
     }
 
-    public function testInvalidJsonThrowsException()
+    public function testInvalidJsonThrowsException(): void
     {
         $this->expectException(RuntimeException::class);
 
@@ -76,7 +77,7 @@ class ResponseCreatorTest extends TestCase
         $this->responseCreator->json($data, 200);
     }
 
-    public function fileProvider()
+    public function fileProvider(): array
     {
         return [
             'with resource and content type specified' => [
@@ -144,7 +145,7 @@ class ResponseCreatorTest extends TestCase
      * @param string      $expectedBody
      * @param string      $expectedContentType
      */
-    public function testAttachment($contentType, string $openAs, string $expectedBody, string $expectedContentType)
+    public function testAttachment($contentType, string $openAs, string $expectedBody, string $expectedContentType): void
     {
         $path = __DIR__ . '/fixtures/plain.txt';
 
@@ -176,14 +177,14 @@ class ResponseCreatorTest extends TestCase
         }
     }
 
-    public function testAttachmentThrowsInvalidArgumentException()
+    public function testAttachmentThrowsInvalidArgumentException(): void
     {
         $this->expectException(InvalidArgumentException::class);
 
         $this->responseCreator->file(1);
     }
 
-    public function fileDownloadProvider()
+    public function fileDownloadProvider(): array
     {
         return [
             'with resource and file name specified' => [
@@ -226,7 +227,7 @@ class ResponseCreatorTest extends TestCase
      * @param string      $openAs
      * @param string      $expectedContentDisposition
      */
-    public function testWithFileDownload(?string $name, string $openAs, string $expectedContentDisposition)
+    public function testWithFileDownload(?string $name, string $openAs, string $expectedContentDisposition): void
     {
         $path = __DIR__ . '/fixtures/plain.txt';
 
