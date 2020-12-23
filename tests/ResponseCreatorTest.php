@@ -11,6 +11,9 @@ use InvalidArgumentException;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
+//https://github.com/slimphp/Slim-Http/blob/9ce77b2e6f5183bc5464d8fb8c0795aa3e5d070a/tests/ResponseTest.php#L381
+//https://github.com/slimphp/Slim-Http/blob/9ce77b2e6f5183bc5464d8fb8c0795aa3e5d070a/src/Response.php#L264
+
 class ResponseCreatorTest extends TestCase
 {
     /** @var ResponseCreator */
