@@ -32,5 +32,12 @@
         "phpstan": "phpstan analyse --ansi",
         "check-style": "phpcs src tests",
         "fix-style": "phpcbf src tests"
+    },
+    "extra": {
+        "chiron": {
+            "providers": [
+                "Chiron\\ResponseCreator\\Provider\\ResponseCreatorServiceProvider"
+            ]
+        }
     }
 }

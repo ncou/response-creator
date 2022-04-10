@@ -13,6 +13,7 @@ use Psr\Http\Message\StreamFactoryInterface;
 use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UriInterface;
 use RuntimeException;
+use Chiron\Container\SingletonInterface;
 
 //https://github.com/bemit/middleware-utils/blob/master/src/HasResponseFactory.php
 
