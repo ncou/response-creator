@@ -14,6 +14,8 @@ use Psr\Http\Message\StreamInterface;
 use Psr\Http\Message\UriInterface;
 use RuntimeException;
 
+//https://github.com/bemit/middleware-utils/blob/master/src/HasResponseFactory.php
+
 //https://github.com/laravel/framework/blob/7.x/src/Illuminate/Routing/ResponseFactory.php
 //https://github.com/slimphp/Slim-Http/blob/9ce77b2e6f5183bc5464d8fb8c0795aa3e5d070a/src/Response.php#L264
 //https://github.com/slimphp/Slim-Http/blob/9ce77b2e6f5183bc5464d8fb8c0795aa3e5d070a/tests/ResponseTest.php#L381
@@ -21,13 +23,14 @@ use RuntimeException;
 // TODO : ajouter une dépendance vers le package chiron/http-message-utils et utiliser les classes StatusCode et Headers pour utiliser des constantes !!!!
 
 // TODO : utiliser cette classe dans le RouteCollector lorsqu'on créé une redirection ou qu'on utilise la fonction ->view() pour charger une page ????
+// TODO : lui faire un implements SingletonInterface car on n'a pas besoin de recharger cette page !!!!
 final class ResponseCreator
 {
     /** @var ResponseFactoryInterface */
-    private $responseFactory;
+    private ResponseFactoryInterface $responseFactory;
 
     /** @var StreamFactoryInterface */
-    private $streamFactory;
+    private StreamFactoryInterface $streamFactory;
 
     /**
      * @param ResponseFactoryInterface $responseFactory
@@ -47,6 +50,7 @@ final class ResponseCreator
      *
      * @return ResponseInterface
      */
+    // TODO : renommer en response()
     public function create(int $code = 200, string $reasonPhrase = ''): ResponseInterface
     {
         return $this->responseFactory->createResponse($code, $reasonPhrase);
@@ -84,7 +88,7 @@ final class ResponseCreator
      */
     // TODO : à utiliser dans le cadre du RedirectController utilisé par le RouteCollector ????
     // TODO : utiliser la classe StatusCode pour remplacer le code 302 par une constante !!!! Idem pour les headers il faut utiliser une classe de constantes !!!
-    public function redirect($uri, int $code = 302): ResponseInterface
+    public function redirect(UriInterface|string $uri, int $code = 302): ResponseInterface
     {
         if (! is_string($uri) && ! $uri instanceof UriInterface) {
             throw new InvalidArgumentException('Redirection allowed only for string or UriInterface uris.');
@@ -104,7 +108,7 @@ final class ResponseCreator
     //https://github.com/laravel/framework/blob/7.x/src/Illuminate/Http/JsonResponse.php
     //https://github.com/symfony/http-foundation/blob/master/JsonResponse.php
     public function json(
-        $data,
+        mixed $data,
         int $code = 200,
         string $contentType = 'application/json'
     ): ResponseInterface {
