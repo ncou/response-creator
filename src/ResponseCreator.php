@@ -52,6 +52,7 @@ final class ResponseCreator
      * @return ResponseInterface
      */
     // TODO : renommer en response()
+    // TODO : initialiser par défaut le mimetype ? en text/html et un charset utf-8 ??? https://github.com/TejasviYB/django/blob/6713926ebe22172e50f283185f969275c326416d/docs/ref/request-response.txt#L752
     public function create(int $code = 200, string $reasonPhrase = ''): ResponseInterface
     {
         return $this->responseFactory->createResponse($code, $reasonPhrase);
@@ -74,6 +75,9 @@ final class ResponseCreator
         $response = $this->create($code);
         $response->getBody()->write($html);
 
+        // TODO : ajouter le charset utf-8 en allant chercher l'info dans la valeur : config('http')->get('default_charset') ???
+        //https://github.com/TejasviYB/django/blob/6713926ebe22172e50f283185f969275c326416d/docs/ref/request-response.txt#L752
+        //https://github.com/django/django/blob/f3bf6c4218404479f7841e0af213d5db65913278/docs/ref/request-response.txt#L790
         return $response->withHeader('Content-Type', $contentType);
     }
 
